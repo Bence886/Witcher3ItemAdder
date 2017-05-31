@@ -1,0 +1,127 @@
+﻿<Window x:Class="Witcher3ItemAdder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Witcher3ItemAdder"
+        mc:Ignorable="d"
+        Title="Bence's Witcher3ItemAdder v0.3a" Width="600" Height="400" >
+    <Grid>
+        <TabControl x:Name="tabControl" Margin="0,0,-0.4,0">
+            <TabItem Header="Tools">
+                <Grid>
+                    <Button Content="BrowseDirectory" Margin="10, 10, 0 0" Height="20" Width="100" HorizontalAlignment="Left" VerticalAlignment="Top" Click="AddDirBTN"/>
+                    <TextBox ToolTip="You can tipe in a path, sometimes it's faster." Margin="120,10,153,0" Height="20" VerticalAlignment="Top" Text="{Binding Path=WorkingDir}"/>
+                    <ListBox Margin="10,40,153,9.6" ItemsSource="{Binding Path=Files}" SelectedItem="{Binding Path=SelectedFile}"/>
+                    <Button ToolTip="Only opens files properly if they are created by this program." x:Name="Open" Content="Open File" Margin="0,10,8,0" VerticalAlignment="Top" Height="40" Click="OpenBTN" HorizontalAlignment="Right" Width="138" RenderTransformOrigin="0.503,0.5"/>
+                    <Button x:Name="Save" Content="Save File" Margin="0,55,8,0" VerticalAlignment="Top" Height="40" Click="SaveBTN" HorizontalAlignment="Right" Width="138"/>
+                    <TextBox x:Name="textBox" Height="20" TextWrapping="Wrap" Text="{Binding Path=FileName}" Margin="0,100,8,0" VerticalAlignment="Top" Width="138" HorizontalAlignment="Right"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Items">
+                <Grid>
+                    <ListBox SelectedItem="{Binding Path=SelectedItem}" ItemsSource="{Binding Path=Items}" Margin="11,6,154,10.2">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="Name: {0} ,Type: {1}">
+                                            <Binding Path="Name"/>
+                                            <Binding Path="Mytype"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListBox>
+                    <Button x:Name="button" Content="Add Item" Margin="0,6,10,0" VerticalAlignment="Top" Height="40" Click="AddBTN" HorizontalAlignment="Right" Width="138"/>
+                    <Button x:Name="button1" Content="Remove Item" Margin="0,96,10,0" VerticalAlignment="Top" Height="40" Click="RemoveBTN" HorizontalAlignment="Right" Width="138"/>
+                    <Button x:Name="button2" Content="Modify Item" Margin="0,51,10,0" VerticalAlignment="Top" Height="40" Click="ModifyBTN" HorizontalAlignment="Right" Width="138"/>
+                    <Button ToolTip="Duplicates the selected item, adds a random number to the name." x:Name="button3" Content="Duplicate" Margin="0,141,10,0" VerticalAlignment="Top" Height="40" Click="DuplicateBTN" HorizontalAlignment="Right" Width="138"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Shop">
+                <Grid>
+                    <ListBox SelectionChanged="NewShopSelected" SelectedItem="{Binding Path=SelectedShop}" ItemsSource="{Binding Path=Shops}" Margin="10,20,300,9.6">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="Name: {0}">
+                                            <Binding Path="Name"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListBox>
+                    <ListBox ToolTip="Items added to the selected shop." SelectedItem="{Binding Path=SelectedShopItem}" ItemsSource="{Binding Path=SelectedShop.Shop}" Margin="0,180,10,10" HorizontalAlignment="Right" Width="252">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Mytype}" Margin="5" />
+                                    <TextBlock Text="{Binding Name}" Margin="5" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Label x:Name="label" Content="Shops" HorizontalAlignment="Left" Margin="10,-6,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="label1" Content="Items" HorizontalAlignment="Right" Margin="0,-6,223,0" VerticalAlignment="Top"/>
+                    <ListBox ToolTip="Items not added to the selected shop." SelectedItem="{Binding Path=SelectedItem}" ItemsSource="{Binding Path=SelectedShopNoItems}" Margin="0,20,10,0" HorizontalAlignment="Right" Width="252" Height="150" VerticalAlignment="Top">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Mytype}" Margin="5" />
+                                    <TextBlock Text="{Binding Name}" Margin="5" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button ToolTip="Adds the selected item to the selected shop." Click="AddToShop" x:Name="button4" Content="Add" Margin="0,20,267,0" HorizontalAlignment="Right" Width="28" Height="150" VerticalAlignment="Top"/>
+                    <Button ToolTip="Removes the selected item from the selected shop." Click="RemoveFromShop" x:Name="button5" Content="Rem" Margin="0,180,267,10" HorizontalAlignment="Right" Width="28"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Containers">
+                <Grid>
+                    <ListBox SelectionChanged="NewContainerSelected" SelectedItem="{Binding Path=SelectedShop}" ItemsSource="{Binding Path=Containers}" Margin="10,20,300,9.6">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="Name: {0}">
+                                            <Binding Path="Name"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListBox>
+                    <ListBox ToolTip="Items added to the selected shop." SelectedItem="{Binding Path=SelectedShopItem}" ItemsSource="{Binding Path=SelectedShop.Shop}" Margin="0,180,10,10" HorizontalAlignment="Right" Width="252">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Mytype}" Margin="5" />
+                                    <TextBlock Text="{Binding Name}" Margin="5" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Label x:Name="labelCon" Content="Containers" HorizontalAlignment="Left" Margin="10,-6,0,0" VerticalAlignment="Top"/>
+                    <Label x:Name="label1Con" Content="Items" HorizontalAlignment="Right" Margin="0,-6,223,0" VerticalAlignment="Top"/>
+                    <ListBox ToolTip="Items not added to the selected container." SelectedItem="{Binding Path=SelectedItem}" ItemsSource="{Binding Path=SelectedShopNoItems}" Margin="0,20,10,0" HorizontalAlignment="Right" Width="252" Height="150" VerticalAlignment="Top">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Mytype}" Margin="5" />
+                                    <TextBlock Text="{Binding Name}" Margin="5" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button ToolTip="Adds the selected item to the selected container." Click="AddToContainer" x:Name="button4Con" Content="Add" Margin="0,20,267,0" HorizontalAlignment="Right" Width="28" Height="150" VerticalAlignment="Top"/>
+                    <Button ToolTip="Removes the selected item from the selected container." Click="RemoveFromContainer" x:Name="button5Con" Content="Rem" Margin="0,180,267,10" HorizontalAlignment="Right" Width="28"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

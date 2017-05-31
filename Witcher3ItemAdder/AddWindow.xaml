@@ -1,0 +1,177 @@
+<Window x:Class="Witcher3ItemAdder.AddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Witcher3ItemAdder"
+        mc:Ignorable="d"
+        Title="AddItemWindow" Height="670" Width="750">
+    <Grid>
+        <TabControl SelectedIndex="{Binding Path=SelectedItemTab}" SelectionChanged="NewTabSelected" Margin="10,10,350,74">
+            <TabItem Tag="Sword" Header="Sword">
+                <Grid>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Name:" Margin="10,10,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding Path=MySword.Name}" Height="25" Margin="72,10,10,0" TextChanged="NameChangedEvent"/>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Price:" Margin="10,40,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MySword.Price}" Height="25" Margin="72,40,10,0" PreviewKeyDown="Number_PreviewKeyDown" />
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Damage:" Margin="10,71,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MySword.Damage}" Height="25" Margin="72,70,50,0" PreviewKeyDown="Number_PreviewKeyDown" />
+                    <Label Margin="0,68,0.4,0" Height="27" VerticalAlignment="Top" HorizontalAlignment="Right" Content="{Binding Path=MySword.Level}" ContentStringFormat="Lvl:{0}" Width="50"/>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="CritChance:" Margin="10,102,0,0"/>
+                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.01" Value="{Binding Path=MySword.CritChance}" Maximum="1" Minimum="0" Margin="85,102,50,0" VerticalAlignment="Top" Height="26"/>
+                    <Label VerticalAlignment="Top" Content="{Binding Path=MySword.CritChance}" Margin="0,100,10,0" Height="25" HorizontalAlignment="Right" Width="35"/>
+                    <ScrollViewer BorderBrush="Black" BorderThickness="1" Margin="85,163,10,0" Height="75" VerticalAlignment="Top">
+                        <ItemsControl ItemsSource="{Binding Path=MySword.Bufflist}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="25">
+                                        <Border BorderBrush="DarkCyan" BorderThickness="0.1"/>
+                                        <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="{Binding Path=Type}" Grid.Column="0" />
+                                        <TextBox Margin="0, 0, 10, 0" VerticalAlignment="Top" MinWidth="50" HorizontalAlignment="Right" Text="{Binding Path=Chance}" Grid.Column="1" PreviewKeyDown="Number_PreviewKeyDown"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Buffs:" Margin="15,164,0,0"/>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="IconPath:" Margin="10,243,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MySword.IconName}" Height="25" Margin="124,243,10,0" />
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Equip Template:" Margin="10,273,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MySword.EquipTemplate}" Height="25" Margin="124,273,10,0" />
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Unlocalized Name:" Margin="10,303,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MySword.UnlocalizedName}" Height="25" Margin="124,302,10,0" />
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Weight:" Margin="10,335,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MySword.Weight}" Height="25" Margin="124,334,10,0" PreviewKeyDown="Number_PreviewKeyDown" />
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Quality:" Margin="10,366,0,0"/>
+                    <Slider IsSnapToTickEnabled="True" TickFrequency="1" Value="{Binding MySword.Quality}" Maximum="5" Minimum="1" Margin="126,366,50,0" VerticalAlignment="Top" Height="26"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MySword.Quality}" Margin="0,364,10,0" Height="25" HorizontalAlignment="Right" Width="35"/>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Enchantment Slots:" Margin="10,396,0,0"/>
+                    <Slider IsSnapToTickEnabled="True" TickFrequency="1" Value="{Binding MySword.SlotNum}" Maximum="10" Minimum="1" Margin="126,396,50,0" VerticalAlignment="Top" Height="26"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MySword.SlotNum}" Margin="0,394,10,0" Height="25" HorizontalAlignment="Right" Width="35"/>
+                    <ScrollViewer BorderBrush="Black" BorderThickness="1" Margin="124,427,10,10">
+                        <ItemsControl ItemsSource="{Binding Path=MySword.Tags}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="25">
+                                        <Border BorderBrush="DarkCyan" BorderThickness="0.1"/>
+                                        <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="{Binding Path=Tag}" Grid.Column="0" />
+                                        <CheckBox Margin="0, 0, 10, 0" VerticalAlignment="Top" HorizontalAlignment="Right" IsChecked="{Binding Path=Needed}" Grid.Column="1"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <ComboBox SelectedItem="{Binding Path=MySword.SwordType}" ItemsSource="{Binding Path=SwordTypes}" Margin="90,130,10,0" Height="28" VerticalAlignment="Top"/>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Sword Type:" Margin="10,133,0,0"/>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Tags:" Margin="10,427,0,0"/>
+                </Grid>
+            </TabItem>
+            <TabItem Tag="Armor" Header="Armor">
+                <Grid>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Name:" Margin="10,10,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding Path=MyArmor.Name}" Height="25" Margin="72,10,10,0" TextChanged="NameChangedEvent" />
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Price:" Margin="10,40,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MyArmor.Price}" Height="25" Margin="72,40,10,0" PreviewKeyDown="Number_PreviewKeyDown" />
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Armor:" Margin="10,71,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MyArmor.ArmorProp}" Height="25" Margin="72,70,50,0" PreviewKeyDown="Number_PreviewKeyDown" />
+                    <Label Margin="0,68,0.4,0" VerticalAlignment="Top" Content="{Binding Path=MyArmor.ArmorLVL}" ContentStringFormat="Lvl:{0}" Height="27" HorizontalAlignment="Right" Width="50"/>
+                    <ScrollViewer BorderBrush="Black" BorderThickness="1" Margin="81,141,10,0" Height="75" VerticalAlignment="Top">
+                        <ItemsControl ItemsSource="{Binding Path=MyArmor.ArmorBuffs}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="25">
+                                        <Border BorderBrush="DarkCyan" BorderThickness="0.1"/>
+                                        <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="{Binding Path=Type}" Grid.Column="0" />
+                                        <TextBox Margin="0, 0, 10, 0" VerticalAlignment="Top" MinWidth="50" HorizontalAlignment="Right" Text="{Binding Path=Chance}" Grid.Column="1" PreviewKeyDown="Number_PreviewKeyDown"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Buffs:" Margin="10,142,0,0" Width="40"/>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="IconPath:" Margin="10,221,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MyArmor.IconName}" Height="25" Margin="124,221,10,0" />
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Equip Template:" Margin="10,251,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MyArmor.EquipTemplate}" Height="25" Margin="124,251,10,0" />
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Unlocalized Name:" Margin="10,282,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MyArmor.UnlocalizedName}" Height="25" Margin="124,281,10,0" />
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Weight:" Margin="10,312,0,0"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MyArmor.Weight}" Height="25" Margin="124,311,10,0" PreviewKeyDown="Number_PreviewKeyDown" />
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Quality:" Margin="10,343,0,0"/>
+                    <Slider IsSnapToTickEnabled="True" TickFrequency="1" Value="{Binding MyArmor.Quality}" Maximum="5" Minimum="1" Margin="126,343,50,0" VerticalAlignment="Top" Height="26"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MyArmor.Quality}" Margin="0,341,10,0" Height="25" HorizontalAlignment="Right" Width="35"/>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Enchantment Slots:" Margin="10,373,0,0"/>
+                    <Slider IsSnapToTickEnabled="True" TickFrequency="1" Value="{Binding MyArmor.SlotNum}" Maximum="10" Minimum="1" Margin="126,373,50,0" VerticalAlignment="Top" Height="26"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MyArmor.SlotNum}" Margin="0,371,10,0" Height="25" HorizontalAlignment="Right" Width="35"/>
+                    <ScrollViewer BorderBrush="Black" BorderThickness="1" Margin="124,404,10,33">
+                        <ItemsControl ItemsSource="{Binding Path=MyArmor.Tags}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="25">
+                                        <Border BorderBrush="DarkCyan" BorderThickness="0.1"/>
+                                        <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="{Binding Path=Tag}" Grid.Column="0" />
+                                        <CheckBox Margin="0, 0, 10, 0" VerticalAlignment="Top" HorizontalAlignment="Right" IsChecked="{Binding Path=Needed}" Grid.Column="1"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Tags:" Margin="10,404,0,0"/>
+                    <ComboBox SelectedItem="{Binding MyArmor.Piece}" ItemsSource="{Binding GetSetType}" Margin="90,107,10,0" Height="28" VerticalAlignment="Top"/>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Armor Type:" Margin="10,110,0,0"/>
+                </Grid>
+            </TabItem>
+            <TabItem Tag="Item" Header="Item">
+                <Grid>
+                    <Label x:Name="label" Content="Under Construction, pls come back in a later version!" Height="100" Margin="10,10,10,417"/>
+                </Grid>
+            </TabItem>
+            <TabItem Tag="Recipe" Header="Recipe">
+                <Grid>
+                    <Label x:Name="label1" Height="30" Content="Other options ---------->" Margin="173,40,10,457"/>
+                    <Label VerticalAlignment="Top" HorizontalAlignment="Left" Content="Name:" RenderTransformOrigin="0.773,1.308" Margin="10,10,0,0" Width="57"/>
+                    <TextBox VerticalAlignment="Top" Text="{Binding MyCraftingRecipe.CraftedItemname}" Height="25" TextChanged="NameChangedEvent" Margin="0,10,10,0" HorizontalAlignment="Right" Width="294"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button Content="Submit" HorizontalAlignment="Left" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="100" Height="50" Click="SubmitButtonPressed"/>
+        <Button Content="Close" HorizontalAlignment="Left" Margin="150,0,0,10" VerticalAlignment="Bottom" Width="100" Height="50" Click="Button_Click"/>
+        <Button Content="Clear" HorizontalAlignment="Left" Margin="292,0,0,10" VerticalAlignment="Bottom" Width="100" Height="50" Click="ClearButtonClicked"/>
+        <Label Content="Crafting Recipe:" HorizontalAlignment="Right" Margin="0,10,252,0" VerticalAlignment="Top"/>
+        <Label Content="Output Item Name:" HorizontalAlignment="Right" Margin="0,41,232,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding Path=MyCraftingRecipe.CraftedItemname}" Height="25" Margin="0,41,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="217"/>
+        <CheckBox Content="" IsChecked="{Binding Path=CraftingRecipeNeeded}" HorizontalAlignment="Right" Margin="0,16,227,0" VerticalAlignment="Top"/>
+        <Label Content="Craftsman lvl:" HorizontalAlignment="Right" Margin="0,72,264,0" VerticalAlignment="Top"/>
+        <Label Content="Craftsman Type:" HorizontalAlignment="Right" Margin="0,103,250,0" VerticalAlignment="Top"/>
+        <Label Content="Price:" HorizontalAlignment="Right" Margin="0,134,307,0" VerticalAlignment="Top"/>
+        <Label Content="Crafting Price:" HorizontalAlignment="Right" Margin="0,165,261,0" VerticalAlignment="Top"/>
+        <Label Content="Unlocalized name:" HorizontalAlignment="Right" Margin="0,196,238,0" VerticalAlignment="Top"/>
+        <Label Content="Icon path:" HorizontalAlignment="Right" Margin="0,227,283,0" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding Path=CraftsManslevel}" SelectedItem="{Binding Path=MyCraftingRecipe.Cl}" HorizontalAlignment="Right" Margin="0,76,10,0" VerticalAlignment="Top" Width="217"/>
+        <ComboBox ItemsSource="{Binding Path=CraftsMansType}" SelectedItem="{Binding MyCraftingRecipe.Ct}" HorizontalAlignment="Right" Margin="0,103,10,0" VerticalAlignment="Top" Width="217"/>
+        <TextBox HorizontalAlignment="Right" Height="23" Margin="0,134,10,0" TextWrapping="Wrap" Text="{Binding Path=MyCraftingRecipe.Price}" VerticalAlignment="Top" Width="217" PreviewKeyDown="Number_PreviewKeyDown"/>
+        <TextBox HorizontalAlignment="Right" Height="23" Margin="0,165,10,0" TextWrapping="Wrap" Text="{Binding MyCraftingRecipe.CraftPrice}" VerticalAlignment="Top" Width="217" PreviewKeyDown="Number_PreviewKeyDown"/>
+        <TextBox HorizontalAlignment="Right" Height="23" Margin="0,199,10,0" TextWrapping="Wrap" Text="{Binding MyCraftingRecipe.Unlocalizedname}" VerticalAlignment="Top" Width="217"/>
+        <TextBox HorizontalAlignment="Right" Height="23" Margin="0,227,10,0" TextWrapping="Wrap" Text="{Binding MyCraftingRecipe.Iconpath}" VerticalAlignment="Top" Width="217"/>
+        <Label Content="Ingreedients:" HorizontalAlignment="Right" Margin="0,257,269,0" VerticalAlignment="Top"/>
+        <TextBox Margin="0,289,12,0" TextWrapping="Wrap" Text="{Binding Path=SearchBar}" TextChanged="SearchbarChanged" HorizontalAlignment="Right" Width="282" Height="22" VerticalAlignment="Top"/>
+        <Label Content="Search:" Margin="0,285,299,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="48"/>
+        <ListBox ItemsSource="{Binding Path=Found}" Margin="0,320,10,114.8" SelectionChanged="NewItemClicked" HorizontalAlignment="Right" Width="335"/>
+        <ListBox ItemsSource="{Binding MyCraftingRecipe.Ingredients}" SelectionChanged="OldItemClicked" HorizontalAlignment="Right" Margin="0,0,10,10" Width="335" Height="100" VerticalAlignment="Bottom">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0, 0, 0, 0" MinWidth="200">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Margin="10, 0, 0, 0" Grid.Column="0" HorizontalAlignment="Left" Content="{Binding Path=Name}" />
+                        <TextBox Margin="0, 0, 10, 0" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding Path=Count}" PreviewKeyDown="Number_PreviewKeyDown"/>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBox HorizontalAlignment="Right" Height="23" Margin="0,10,10,0" TextWrapping="Wrap" Text="{Binding MyCraftingRecipe.Name}" VerticalAlignment="Top" Width="163"/>
+        <Label Content="Name:" HorizontalAlignment="Right" Margin="0,8,178,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
