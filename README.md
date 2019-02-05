@@ -23,11 +23,11 @@ How it works:
 1. Select the working directory you want your file to be saved.
 2. Write the name of your file(_swords.xml, _items.xml, _shop.xml e.g. will be added for the output files)
 3. Go to the Items tab, click Add item fill the form as you desire.
-4. You can choose if you need crafting recipe or not.
-    4,1. Fill the other form on the right.
-    4,2. You can choose crafting ingredients by clicking on them, you can search in the list.
-    4,3. The selected items will appear in another list by clicking on them you can remove them fom there.
-    4,4. By editing the number near the"selected items" you determine the number of that item needed in the crafting.
+4. You can choose if you need crafting recipe or not.  
+    4,1. Fill the other form on the right.  
+    4,2. You can choose crafting ingredients by clicking on them, you can search in the list.  
+    4,3. The selected items will appear in another list by clicking on them you can remove them fom there.  
+    4,4. By editing the number near the"selected items" you determine the number of that item needed in the crafting.  
 5. When you click submit the item and the recipe (if checked) will  be added and the Add window will stay open sou you can create the next item.
 5. Go to  the Shop/Containers tab, select the shop/container you want your item to be in, select your item click Add.
 6. Go back to the first (Tools)tab click save.
